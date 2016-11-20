@@ -5,7 +5,7 @@
 
 TARGET_BOARD_PLATFORM := msm8996
 # This value will be shown on fastboot menu
-TARGET_BOOTLOADER_BOARD_NAME := QC_Reference_Phone
+#TARGET_BOOTLOADER_BOARD_NAME := QC_Reference_Phone
 
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -24,7 +24,7 @@ else
 TARGET_2ND_CPU_VARIANT := cortex-a9
 endif
 
-TARGET_NO_BOOTLOADER := false
+TARGET_NO_BOOTLOADER := true
 TARGET_NO_KERNEL := false
 BOOTLOADER_GCC_VERSION := arm-eabi-4.8
 BOOTLOADER_PLATFORM := msm8996 # use msm8996 LK configuration
@@ -51,15 +51,18 @@ BOARD_USE_LEGACY_UI := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 TARGET_USERIMAGES_USE_EXT4 := true
+
+ifneq ($(TARGET_DEVICE),oneplus3)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x04000000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x04000000
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 10737418240
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_PERSISTIMAGE_PARTITION_SIZE := 33554432
-BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
+endif
+BOARD_PERSISTIMAGE_PARTITION_SIZE := 33554432
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_PERSISTIMAGE_FILE_SYSTEM_TYPE := ext4
 
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
@@ -67,6 +70,7 @@ ifneq ($(TARGET_USES_AOSP),true)
 TARGET_USES_QCOM_BSP := true
 endif
 
+ifneq ($(TARGET_DEVICE),oneplus3)
 ifeq ($(BOARD_KERNEL_CMDLINE),)
 ifeq ($(TARGET_KERNEL_VERSION),4.4)
     BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0
@@ -76,11 +80,13 @@ endif
 
 BOARD_KERNEL_CMDLINE += androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 cma=32M@0-0xffffffff
 endif
+endif
 
 BOARD_SECCOMP_POLICY := device/qcom/$(TARGET_BOARD_PLATFORM)/seccomp
 
 BOARD_EGL_CFG := device/qcom/$(TARGET_BOARD_PLATFORM)/egl.cfg
 
+ifneq ($(TARGET_DEVICE),oneplus3)
 BOARD_KERNEL_BASE        := 0x80000000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x02000000
@@ -90,6 +96,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 TARGET_USES_UNCOMPRESSED_KERNEL := false
+endif
 
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
@@ -97,7 +104,7 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 TARGET_NO_RPC := true
 
 TARGET_PLATFORM_DEVICE_BASE := /devices/soc/
-TARGET_INIT_VENDOR_LIB := libinit_msm
+#TARGET_INIT_VENDOR_LIB := libinit_msm
 
 #Enable Peripheral Manager
 TARGET_PER_MGR_ENABLED := true
@@ -111,6 +118,7 @@ TARGET_PD_SERVICE_ENABLED := true
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 TARGET_BOOTIMG_SIGNED := true
 
+ifneq ($(TARGET_DEVICE),oneplus3)
 # Enable dex pre-opt to speed up initial boot
 ifeq ($(HOST_OS),linux)
     ifeq ($(WITH_DEXPREOPT),)
@@ -122,25 +130,26 @@ ifeq ($(HOST_OS),linux)
       endif
     endif
 endif
+endif
 
 # Enable sensor multi HAL
 USE_SENSOR_MULTI_HAL := true
 
 # Enable build with MSM kernel
-TARGET_COMPILE_WITH_MSM_KERNEL := true
+#TARGET_COMPILE_WITH_MSM_KERNEL := true
 
 TARGET_KERNEL_APPEND_DTB := true
 # Added to indicate that protobuf-c is supported in this build
 PROTOBUF_SUPPORTED := false
 
 #Add NON-HLOS files for ota upgrade
-ADD_RADIO_FILES := true
-TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_msm
-TARGET_RECOVERY_UI_LIB := librecovery_ui_msm
+#ADD_RADIO_FILES := true
+#TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_msm
+#TARGET_RECOVERY_UI_LIB := librecovery_ui_msm
 
 TARGET_CRYPTFS_HW_PATH := device/qcom/common/cryptfs_hw
 
 #Add support for firmare upgrade on 8996
 HAVE_SYNAPTICS_DSX_FW_UPGRADE := true
 
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.msm
+#BOARD_HAL_STATIC_LIBRARIES := libhealthd.msm
