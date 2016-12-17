@@ -51,7 +51,7 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 
 TARGET_USERIMAGES_USE_EXT4 := true
 
-ifneq ($(TARGET_DEVICE),oneplus3)
+ifneq ($(filter gemini, oneplus3$(TARGET_DEVICE)),)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 0x04000000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x04000000
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 3221225472
@@ -69,7 +69,7 @@ ifneq ($(TARGET_USES_AOSP),true)
 TARGET_USES_QCOM_BSP := true
 endif
 
-ifneq ($(TARGET_DEVICE),oneplus3)
+ifneq ($(filter gemini, oneplus3$(TARGET_DEVICE)),)
 ifeq ($(BOARD_KERNEL_CMDLINE),)
 ifeq ($(TARGET_KERNEL_VERSION),4.4)
     BOARD_KERNEL_CMDLINE += console=ttyMSM0,115200,n8 androidboot.console=ttyMSM0
@@ -85,7 +85,7 @@ BOARD_SECCOMP_POLICY := device/qcom/$(TARGET_BOARD_PLATFORM)/seccomp
 
 BOARD_EGL_CFG := device/qcom/$(TARGET_BOARD_PLATFORM)/egl.cfg
 
-ifneq ($(TARGET_DEVICE),oneplus3)
+ifneq ($(filter gemini, oneplus3$(TARGET_DEVICE)),)
 BOARD_KERNEL_BASE        := 0x80000000
 BOARD_KERNEL_PAGESIZE    := 4096
 BOARD_KERNEL_TAGS_OFFSET := 0x02000000
@@ -120,7 +120,7 @@ TARGET_PD_SERVICE_ENABLED := true
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 TARGET_BOOTIMG_SIGNED := true
 
-ifneq ($(TARGET_DEVICE),oneplus3)
+ifneq ($(filter gemini, oneplus3$(TARGET_DEVICE)),)
 # Enable dex pre-opt to speed up initial boot
 ifeq ($(HOST_OS),linux)
     ifeq ($(WITH_DEXPREOPT),)
@@ -139,10 +139,13 @@ USE_SENSOR_MULTI_HAL := true
 
 # Enable build with MSM kernel
 #TARGET_COMPILE_WITH_MSM_KERNEL := true
-
 TARGET_KERNEL_APPEND_DTB := true
 # Added to indicate that protobuf-c is supported in this build
-PROTOBUF_SUPPORTED := false
+ifeq ($(TARGET_DEVICE),gemini)
+PROTOBUF_SUPPORTED := true
+else
+PROTOBUF_SUPPORTED := true
+endif
 
 #Add NON-HLOS files for ota upgrade
 #ADD_RADIO_FILES := true
