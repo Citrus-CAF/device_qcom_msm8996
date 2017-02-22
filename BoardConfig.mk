@@ -43,7 +43,6 @@ USE_CLANG_PLATFORM_BUILD := true
 
 # Some framework code requires this to enable BT
 BOARD_HAVE_BLUETOOTH := true
-BOARD_USES_WIPOWER := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/qcom/common
 
 USE_OPENGL_RENDERER := true
@@ -111,6 +110,9 @@ TARGET_PER_MGR_ENABLED := true
 
 #Enable HW based full disk encryption
 TARGET_HW_DISK_ENCRYPTION := true
+
+#Enabling IMS Feature
+TARGET_USES_IMS := true
 
 #Enable PD locater/notifier
 TARGET_PD_SERVICE_ENABLED := true
