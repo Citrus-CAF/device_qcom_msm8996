@@ -83,6 +83,7 @@ include $(BUILD_PREBUILT)
 #include $(BUILD_PREBUILT)
 endif # TARGET_USE_CM_RAMDISK
 
+ifneq ($(USE_DEVICE_WLAN_CONFIGS), true)
 ifeq ($(strip $(BOARD_HAS_QCOM_WLAN)),true)
 include $(CLEAR_VARS)
 LOCAL_MODULE       := wpa_supplicant_overlay.conf
@@ -131,7 +132,7 @@ $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wlan/qca_cld; \
         ln -sf /dev/block/bootdevice/by-name/msadp \
         $(TARGET_OUT_ETC)/firmware/msadp )
 endif
-
+endif
 #----------------------------------------------------------------------
 # ultrasound support
 #----------------------------------------------------------------------
