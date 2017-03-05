@@ -13,7 +13,7 @@ TARGET_KERNEL_VERSION := 3.18
 TARGET_USES_MEDIA_EXTENSIONS := true
 
 # copy customized media_profiles and media_codecs xmls for msm8996
-ifneq ($(USE_DEVICE_AUDIO_CONFIGS), true)
+ifneq ($(filter gemini oneplus3,$(TARGET_DEVICE)),)
 ifeq ($(TARGET_ENABLE_QC_AV_ENHANCEMENTS), true)
 PRODUCT_COPY_FILES += device/qcom/msm8996/media_profiles.xml:system/etc/media_profiles.xml \
                       device/qcom/msm8996/media_codecs.xml:system/etc/media_codecs.xml \
@@ -60,10 +60,10 @@ PRODUCT_BOOT_JARS += qcmediaplayer
 #Android EGL implementation
 PRODUCT_PACKAGES += libGLES_android
 
+ifneq ($(filter gemini oneplus3,$(TARGET_DEVICE)),)
 # Audio configuration file
 -include $(TOPDIR)hardware/qcom/audio/configs/msm8996/msm8996.mk
 
-ifneq ($(USE_DEVICE_WLAN_CONFIGS), true)
 # WLAN driver configuration files
 PRODUCT_COPY_FILES += \
     device/qcom/msm8996/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
@@ -73,7 +73,7 @@ endif
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.midi.xml:system/etc/permissions/android.software.midi.xml
 
-ifneq ($(USE_DEVICE_WLAN_CONFIGS), true)
+ifneq ($(filter gemini oneplus3,$(TARGET_DEVICE)),)
 PRODUCT_PACKAGES += \
     wpa_supplicant_overlay.conf \
     p2p_supplicant_overlay.conf

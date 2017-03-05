@@ -83,7 +83,7 @@ include $(BUILD_PREBUILT)
 #include $(BUILD_PREBUILT)
 endif # TARGET_USE_CM_RAMDISK
 
-ifneq ($(USE_DEVICE_WLAN_CONFIGS), true)
+ifneq ($(filter gemini oneplus3,$(TARGET_DEVICE)),)
 ifeq ($(strip $(BOARD_HAS_QCOM_WLAN)),true)
 include $(CLEAR_VARS)
 LOCAL_MODULE       := wpa_supplicant_overlay.conf
